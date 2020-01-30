@@ -1,0 +1,32 @@
+{
+	"red": {
+		"target": [0, 0, 0],
+		"intensity": 1.0,
+		"desaturate": false
+	},
+	"green": {
+		"target": [0, 0, 0],
+		"intensity": 1.0,
+		"desaturate": false
+	},
+	"blue": {
+		"target": [0, 0, 0],
+		"intensity": 1.0,
+		"desaturate": false
+	},
+	"cyan": {
+		"target": [0, 0, 0],
+		"intensity": 1.0,
+		"desaturate": false
+	},
+	"yellow": {
+		"target": [0, 0, 0],
+		"intensity": 1.0,
+		"desaturate": false
+	},
+	"magenta": {
+		"target": [0, 0, 0],
+		"intensity": 1.0,
+		"desaturate": false
+	}
+}
