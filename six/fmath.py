@@ -1,7 +1,8 @@
 from typing import Tuple
+from math import floor
 
 def lerp(a: float, b: float, alpha: float) -> float:
-	return a + b * alpha
+	return a * (1 - alpha) + b * alpha
 
 def clamp(min_val: float, value: float, max_val: float) -> float:
 	return min(max_val, max(value, min_val))
@@ -22,3 +23,18 @@ def choose_darker(pixel_a: Tuple[int, int, int], pixel_b: Tuple[int, int, int]) 
 	if La < Lb:
 		return pixel_a
 	return pixel_b
+
+def clamp_pixel(lower: int, pixel: Tuple[int, int, int], upper: int) -> Tuple[int, int, int]:
+	return (clamp(lower, pixel[0], upper), clamp(lower, pixel[1], upper), clamp(lower, pixel[2], upper))
+
+def to_pixelf(pixel: Tuple[int, int, int]) -> Tuple[float, float, float]:
+	return (pixel[0] / 255, pixel[1] / 255, pixel[2] / 255)
+
+def to_pixeli(pixel: Tuple[float, float, float]) -> Tuple[int, int, int]:
+	return clamp_pixel(0, (floor(pixel[0] * 255), floor(pixel[1] * 255), floor(pixel[2] * 255)), 255)
+
+def sum_pixels(a: Tuple[int, int, int], b: Tuple[int, int, int]) -> Tuple[int, int, int]:
+	return (a[0] + b[0], a[1] + b[1], a[2] + b[2])
+
+def mul_pixelf(a: Tuple[float, float, float], b: float):
+	return (a[0] * b, a[1] * b, a[2] * b)
