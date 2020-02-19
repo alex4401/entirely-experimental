@@ -1,0 +1,4 @@
+# Obelisk data
+*.svg
+*.json
+blacklist.txt
