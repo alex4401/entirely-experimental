@@ -78,16 +78,19 @@ def _choose_dino(classes):
 	return [classes[int(choice.strip())] for choice in data.split(',')]
 
 dino_classes = list()
-if '*' in species_names:
-	species_names = []
-	print('Resolving wildcard')
-	for dino in asb['species']:
-		make_x_class(dino)
-		dino_classes.append(dino)
-else:
-	print('Resolving dinos')
-	pad = max(len(x) for x in species_names)
-	for dino_name in species_names:
+print('Resolving dinos')
+pad = max(len(x) for x in species_names)
+for dino_name in species_names:
+	if dino_name.startswith('p='):
+		pattern = dino_name[2:]
+		print(f'\tMatching pattern: {pattern}')
+		pattern = re.compile(pattern)
+		for dino in asb['species']:
+			if pattern.match(dino['blueprintPath']):
+				make_x_class(dino)
+				print(f'\t\t+ {dino["x-class"]}')
+				dino_classes.append(dino)
+	else:
 		print(f'\t{dino_name.ljust(pad)}: ', end='')
 		matches = _resolve_dino(asb, dino_name)
 		print(f'{len(matches)} match(es)')
@@ -147,10 +150,16 @@ for descriptor in files:
 			new_path = dst_path / f'Spawning {species_name} {map_name}.svg'
 
 		print(f'\tCopying spawn map of {species_name} on {map_name}')
-		manifest.append(str(new_path.name))
+		file_name = str(new_path.name)
+
+		if file_name in manifest:
+			print(f'\t\tCollision!')
+
+		manifest.append(file_name)
 		new_path.write_text(input)
 
 print(f'Generating the blacklist')
+manifest.sort()
 with open(dst_path / 'blacklist.txt', 'a') as fp:
 	for file in manifest:
 		fp.write(f'* [[:File:{file}]]\n')
