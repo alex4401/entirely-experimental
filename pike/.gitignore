@@ -1,4 +1,14 @@
 # Obelisk data
 *.svg
 *.json
+obelisk/
+
+# Diffs
+a/
+b/
+
+# Results
 blacklist.txt
+species.txt
+target/
+target_*/
